@@ -7,48 +7,89 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <link rel="stylesheet" href="/resources/demos/style.css">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" 
+    rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css'%}">
 </head>
 <body>
-  <div class="board" style="overflow:auto;">
+  <div class="board" >
     <div class="cl-title">
-      <h2>Board</h2>
+      <h2>MyKanban</h2>
     </div>
     <div id="content" class="content" >
-      <div class="cl-container">
-        <a type="button" class="btn list_del">List del</a>
+      {% for list in lists %}
+      <div class="cl-container" id="{{ list.id }}" >
+        <button type="button" class="btn btn-default list_del">List Del</button>
         <div class="cl-container-header">
-          <h2>List</h2>
-          <hr>
+          <h2>
+            <label class="cl-list-title">{{ list.title }}</label>
+          </h2>
         </div>
+        <div class="input-group" style="margin:10px; width:90%">
+          <input type="text" class="form-control" placeholder="Card title">
+          <span class="input-group-btn">
+            <button class="btn btn-default card_add" type="button">Add</button>
+          </span>
+        </div><!-- /input-group -->
         <ul class="cl-container-body">
-          <input type="text" placeholder="Text" />
-          <button type="button" class="btn card_add"><i class="icon-plus"></i>Add</button>
-          <li>
-            card1
-            <button class="btn card_delete"><i class="icon-plus"></i>Del</button>
-          </li>
-          <li>
-            card2
-            <button class="btn card_delete"><i class="icon-plus"></i>Del</button>
-          </li>
-          <li>
-            card3
-            <button class="btn card_delete"><i class="icon-plus"></i>Del</button>
-          </li>
+          {% for card in cards %}
+            {% if card.list_id.id == list.id %}
+            <li class="cl-card" id="{{ card.id }}">
+              <label>{{ card.title }}</label>
+              <button class="btn btn-default card_delete">Del</button>
+            </li>
+            {% endif %}
+          {% endfor %}
         </ul>
       </div>
-
+      {% endfor %}
     </div>
     <div class="cl-container">
       <div class="cl-container-header">
-        <div class="btn-group" role="group" aria-label="...">
-          <a type="button" class="btn list_add">List Add</a>
-        </div>
+        <form method='post'>{% csrf_token %}
+          <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default list_add">List Add</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/scripts.js' %}"></script>
+  <script src="{% static 'js/csrf.js' %}"></script>
 </body>
-<link rel="stylesheet" href="{% static 'css/style.css'%}">
-<script src="{% static 'js/scripts.js' %}"></script>
 </html>
+
+<!-- Modal -->
+<div class="modal fade" id="cardModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" >Card</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+          <input type="hidden" id="modal-list_id" value="" />
+          <input type="hidden" id="modal-card_id" value="" />
+          <div class="form-group">
+            <label class="control-label">Title:</label>
+            <input type="text" class="form-control" id="card-title" value=""></input>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Description:</label>
+            <input type="text" class="form-control" id="description" value=""></input>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Tag:</label>
+            <input class="form-control" id="tag" value=""></input>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="card-submit">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

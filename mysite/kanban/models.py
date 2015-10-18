@@ -2,6 +2,12 @@ from django.db import models
 
 # Create your models here.
 
+class User(models.Model):
+    user_id = models.CharField(max_length=100, primary_key=True, null=False, blank=False,
+                                    help_text='user')
+    password = models.CharField(max_length=100, null=False, blank=False, help_text='')
+    create_date = models.DateTimeField(auto_now_add=True)
+    modify_date = models.DateTimeField(auto_now=True)
 
 class Board(models.Model):
     order_num = models.IntegerField(default='1')
@@ -39,3 +45,4 @@ class Card(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     modify_date = models.DateTimeField(auto_now=True)
     list_id = models.ForeignKey(List)
+    board_id = models.ForeignKey(Board)

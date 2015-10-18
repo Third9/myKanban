@@ -5,7 +5,7 @@ body {
 .cl-container {
   float: left;
   margin-right: 10px;
-  width: 400px;
+  width: 200px;
   border-radius: 2px;
   background-color: #FAECDC;
   box-shadow: 2px 2px 2px #222;
@@ -44,21 +44,27 @@ body {
   border-radius: 2px;
   box-shadow: 1px 1px 2px #222;
 }
-  #sortable { list-style-type: none; margin: 0; padding: 0; width: 450px; }
-  #sortable li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
-  #list{
-    border: 1px solid #eee;
-    width: 142px;
-    min-height: 20px;
-    list-style-type: none;
-    margin: 0;
-    padding: 5px 0 0 0;
-    float: left;
-    margin-right: 10px;
-  }
-  #list li {
-    margin: 0 5px 5px 5px;
-    padding: 5px;
-    font-size: 1.2em;
-    width: 120px;
-  }
+.board {
+  height: 100%;
+  width: 100%;
+  /*border: 1px solid black;*/
+  overflow: auto;
+}
+#sortable { list-style-type: none; margin: 0; padding: 0; width: 450px; }
+#sortable li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 100px; height: 90px; font-size: 4em; text-align: center; }
+#list{
+  border: 1px solid #eee;
+  width: 142px;
+  min-height: 20px;
+  list-style-type: none;
+  margin: 0;
+  padding: 5px 0 0 0;
+  float: left;
+  margin-right: 10px;
+}
+#list li {
+  margin: 0 5px 5px 5px;
+  padding: 5px;
+  font-size: 1.2em;
+  width: 120px;
+}
